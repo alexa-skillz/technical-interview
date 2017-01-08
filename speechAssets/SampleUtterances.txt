@@ -1,0 +1,115 @@
+GetQuestionIntent question
+GetQuestionIntent ask question
+GetQuestionIntent give question
+GetQuestionIntent provide question
+GetQuestionIntent send question
+GetQuestionIntent ask a question
+GetQuestionIntent give a question
+GetQuestionIntent provide a question
+GetQuestionIntent send a question
+GetQuestionIntent ask me a question
+GetQuestionIntent give me a question
+GetQuestionIntent provide me a question
+GetQuestionIntent send me a question
+GetQuestionIntent ask a whiteboarding question
+GetQuestionIntent give a whiteboarding question
+GetQuestionIntent provide a whiteboarding question
+GetQuestionIntent send a whiteboarding question
+GetQuestionIntent ask me a whiteboarding question
+GetQuestionIntent give me a whiteboarding question
+GetQuestionIntent provide me a whiteboarding question
+GetQuestionIntent send me a whiteboarding question
+GetQuestionIntent ask a technical question
+GetQuestionIntent give a technical question
+GetQuestionIntent provide a technical question
+GetQuestionIntent send a technical question
+GetQuestionIntent ask me a technical question
+GetQuestionIntent give me a technical question
+GetQuestionIntent provide me a technical question
+GetQuestionIntent send me a technical question
+GetQuestionIntent ask a javascript question
+GetQuestionIntent give a javascript question
+GetQuestionIntent provide a javascript question
+GetQuestionIntent send a javascript question
+GetQuestionIntent ask me a javascript question
+GetQuestionIntent give me a javascript question
+GetQuestionIntent provide me a javascript question
+GetQuestionIntent send me a javascript question
+GetQuestionIntent ask a programming question
+GetQuestionIntent give a programming question
+GetQuestionIntent provide a programming question
+GetQuestionIntent send a programming question
+GetQuestionIntent ask me a programming question
+GetQuestionIntent give me a programming question
+GetQuestionIntent provide me a programming question
+GetQuestionIntent send me a programming question
+GetQuestionIntent i would like question
+GetQuestionIntent can i have a question
+
+DontKnowIntent dunno
+DontKnowIntent skip
+DontKnowIntent can't answer
+DontKnowIntent don't know
+DontKnowIntent who knows
+DontKnowIntent i don't know
+DontKnowIntent i can't answer
+DontKnowIntent i don't know that
+DontKnowIntent i can't answer that
+DontKnowIntent i don't know that one
+DontKnowIntent i can't answer that one
+DontKnowIntent i don't know this
+DontKnowIntent i don't know this question
+DontKnowIntent i can't answer this question
+
+GiveHintIntent hint
+GiveHintIntent clue
+GiveHintIntent insight
+GiveHintIntent give hint
+GiveHintIntent need hint
+GiveHintIntent give insight
+GiveHintIntent i need hint
+GiveHintIntent i need clue
+GiveHintIntent i need insight
+GiveHintIntent i need a hint
+GiveHintIntent i need a clue
+GiveHintIntent give hint
+GiveHintIntent give clue
+GiveHintIntent give insight
+GiveHintIntent give a hint
+GiveHintIntent give a clue
+GiveHintIntent give me a hint
+GiveHintIntent give me a clue
+
+ShowAnswerIntent answer
+ShowAnswerIntent finished
+ShowAnswerIntent done
+ShowAnswerIntent give answer
+ShowAnswerIntent i need answer
+ShowAnswerIntent i need the answer
+ShowAnswerIntent give me the answer
+ShowAnswerIntent i am done
+ShowAnswerIntent i am finished
+ShowAnswerIntent show me the answer
+ShowAnswerIntent provide me the answer
+ShowAnswerIntent provide answer
+
+AMAZON.RepeatIntent repeat
+AMAZON.RepeatIntent say again
+AMAZON.RepeatIntent start over
+AMAZON.RepeatIntent replay
+AMAZON.RepeatIntent rerun
+AMAZON.RepeatIntent recap
+AMAZON.RepeatIntent rehash
+AMAZON.RepeatIntent run through again
+AMAZON.RepeatIntent restate
+AMAZON.RepeatIntent what
+AMAZON.RepeatIntent reword
+AMAZON.RepeatIntent pardon
+AMAZON.RepeatIntent pardon me
+AMAZON.RepeatIntent review
+AMAZON.RepeatIntent restate
+AMAZON.RepeatIntent rephrase
+AMAZON.RepeatIntent please repeat
+AMAZON.RepeatIntent can you repeat that question
+AMAZON.RepeatIntent can you say that again
+AMAZON.RepeatIntent say that again
