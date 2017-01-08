@@ -1,0 +1,40 @@
+{
+  "name": "technical-interview",
+  "version": "0.1.0",
+  "description": "",
+  "main": "/src/index.js",
+  "scripts": {
+    "test": "istanbul cover mocha",
+    "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "gulp": "gulp",
+    "lint": "gulp lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexa-skillz/technical-interview.git"
+  },
+  "keywords": [],
+  "author": "Jonathan Heemstra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexa-skillz/technical-interview/issues"
+  },
+  "homepage": "https://github.com/alexa-skillz/technical-interview#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "alexa-app": "^2.3.4",
+    "aws-lambda-mock-context": "^3.0.1",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "gulp": "^3.9.1",
+    "gulp-cache": "^0.4.5",
+    "gulp-eslint": "^3.0.1",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-mocha": "^3.0.1",
+    "lodash": "^4.17.3",
+    "mocha": "^3.2.0",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1",
+    "winston": "^2.3.0"
+  }
+}
