@@ -4,10 +4,11 @@
   "description": "",
   "main": "/src/index.js",
   "scripts": {
-    "test": "istanbul cover mocha",
+    "test": "istanbul cover _mocha",
     "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "gulp": "gulp",
-    "lint": "gulp lint"
+    "lint": "gulp lint",
+    "mocha": "DEBUG='tech*' mocha"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "alexa-app": "^2.3.4",
     "aws-lambda-mock-context": "^3.0.1",
+    "aws-lambda-pify": "^3.0.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "gulp": "^3.9.1",
