@@ -8,7 +8,8 @@ const TechQuestion = function() {
 };
 
 // Requiring in technical questions from lib directory to be used here.
-const TECHQUESTIONS = require('./lib/test-questions');
+const TECHQUESTIONS = require('./lib/tech-questions');
+console.log(TECHQUESTIONS);
 
 TechQuestion.prototype = Object.create(AlexaSkill.prototype);
 TechQuestion.prototype.constructor = TechQuestion;
