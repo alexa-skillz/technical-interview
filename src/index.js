@@ -7,6 +7,9 @@ const TechQuestion = function() {
   AlexaSkill.call(this, APP_ID);
 };
 
+// Requiring in technical questions from lib directory to be used here.
+const TECHQUESTIONS = require('./lib/test-questions');
+
 TechQuestion.prototype = Object.create(AlexaSkill.prototype);
 TechQuestion.prototype.constructor = TechQuestion;
 
