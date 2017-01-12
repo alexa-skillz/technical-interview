@@ -1,6 +1,6 @@
 'use strict';
 
-const APP_ID = undefined;
+const APP_ID = 'arn:aws:lambda:us-east-1:862183905867:function:Technical-Interview';
 const AlexaSkill = require('./AlexaSkill.js');
 
 const TechQuestion = function() {
@@ -35,8 +35,8 @@ TechQuestion.prototype.intentHandlers = {
   // TODO: add GetQuestionIntent
   'GetQuestionIntent': function(intent, session, response) {
     let speechOutput = 'Here is your question:';
-    response.tell(speechOutput);
-    newQuestion(response);
+    response.tell(speechOutput, newQuestion(response));
+    // newQuestion(response);
   },
   // TODO: add DontKnowIntent
   'DontKnowIntent': function(intent, session, response) {
@@ -53,7 +53,7 @@ TechQuestion.prototype.intentHandlers = {
   // TODO: AMAZON.HelpIntent
   'AMAZON.HelpIntent': function(intent, session, response) {
     let repromptText = 'Are you ready to get started?';
-    let speechOutput = 'The Technical Interview Whiteboaring trainer contains a collection of common JavaScript whiteboaring quesitons. You can ask for a question by saying <break time = \"0.3s\"/> give me a whiteboarding question. You can also end your current training session at any time by saying stop, cancel, or exit.';
+    let speechOutput = 'The Technical Interview Whiteboaring trainer contains a collection of common JavaScript whiteboaring quesitons. You can ask for a question by saying <break time = "0.3s"/> give me a whiteboarding question. You can also end your current training session at any time by saying stop, cancel, or exit.';
     response.ask(speechOutput, repromptText);
   },
   // TODO: AMAZON.NoIntent
@@ -64,8 +64,7 @@ TechQuestion.prototype.intentHandlers = {
   // TODO: AMAZON.YesIntent
   'AMAZON.YesIntent': function(intent, session, response) {
     let speechOutput = 'Here is your question:';
-    response.tell(speechOutput);
-    newQuestion(response);
+    response.tell(speechOutput, newQuestion(response));
   },
   // TODO: AMAZON.StopIntent
   'AMAZON.StopIntent': function(intent, session, response) {
@@ -87,13 +86,13 @@ TechQuestion.prototype.intentHandlers = {
 
 function newQuestion(response) {
   let randomQuestion = Math.floor(Math.random() * TECHQUESTIONS.length);
-  let spokenQuestion = Object.keys(TECHQUESTIONS[randomQuestion])[0];
+  let spokenQuestion = TECHQUESTIONS[randomQuestion];
 
   console.log(spokenQuestion);
 
-  let speechOutput = `Here is your question <break time = \"0.3s\"/> ${spokenQuestion}`;
+  let speechOutput = `Here is your question:\r\n ${spokenQuestion}`;
   let cardTitle = 'Whiteboaring Question';
-  response.askWithCard(speechOutput, cardTitle, spokenQuestion);
+  response.tellWithCard(speechOutput, cardTitle, speechOutput);
 }
 
 exports.handler = function(event, context) {

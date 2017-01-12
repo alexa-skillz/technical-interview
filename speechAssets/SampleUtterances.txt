@@ -113,3 +113,10 @@ AMAZON.RepeatIntent please repeat
 AMAZON.RepeatIntent can you repeat that question
 AMAZON.RepeatIntent can you say that again
 AMAZON.RepeatIntent say that again
+
+AMAZON.YesIntent yes
+AMAZON.YesIntent yup
+AMAZON.YesIntent yuppers
+AMAZON.YesIntent confirmed
+AMAZON.YesIntent ready
+AMAZON.YesIntent yaass
