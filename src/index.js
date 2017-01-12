@@ -33,14 +33,56 @@ TechQuestion.prototype.eventHandlers.onSessionEnded = function(sessionEndedReque
 
 TechQuestion.prototype.intentHandlers = {
   // TODO: add GetQuestionIntent
+  'GetQuestionIntent': function(intent, session, response) {
+    let speechOutput = 'Here is your question:';
+    response.tell(speechOutput);
+    newQuestion(response);
+  },
   // TODO: add DontKnowIntent
+  'DontKnowIntent': function(intent, session, response) {
+    newQuestion(response);
+  },
+  // TODO: AMAZON.StartOverIntent
+  'AMAZON.StartOverIntent': function(intent, session, response) {
+
+  },
+  // TODO: AMAZON.RepeatIntent
+  'AMAZON.RepeatIntent': function(intent, session, response) {
+
+  },
+  // TODO: AMAZON.HelpIntent
+  'AMAZON.HelpIntent': function(intent, session, response) {
+    let repromptText = 'Are you ready to get started?';
+    let speechOutput = 'The Technical Interview Whiteboaring trainer contains a collection of common JavaScript whiteboaring quesitons. You can ask for a question by saying <break time = \"0.3s\"/> give me a whiteboarding question. You can also end your current training session at any time by saying stop, cancel, or exit.';
+    response.ask(speechOutput, repromptText);
+  },
+  // TODO: AMAZON.NoIntent
+  'AMAZON.NoIntent': function(intent, session, response) {
+    let speechOutput = '';
+    response.tell(speechOutput);
+  },
+  // TODO: AMAZON.YesIntent
+  'AMAZON.YesIntent': function(intent, session, response) {
+    let speechOutput = 'Here is your question:';
+    response.tell(speechOutput);
+    newQuestion(response);
+  },
+  // TODO: AMAZON.StopIntent
+  'AMAZON.StopIntent': function(intent, session, response) {
+    let speechOutput = '';
+    response.tell(speechOutput);
+  },
+  // TODO: AMAZON.CancelIntent
+  'AMAZON.CancelIntent': function(intent, session, response) {
+    let speechOutput = '';
+    response.tell(speechOutput);
+  },
+  'AMAZON.ExitIntent': function(intent, session, response) {
+    let speechOutput = '';
+    response.tell(speechOutput);
+  }
   // TODO: GiveHintIntent (STRETCH GOAL)
   // TODO: ShowAnswerIntent (STRETCH GOAL)
-  // TODO: AMAZON.StartOverIntent
-  // TODO: AMAZON.RepeatIntent
-  // TODO: AMAZON.HelpIntent
-  // TODO: AMAZON.StopIntent
-  // TODO: AMAZON.CancelIntent
 };
 
 function newQuestion(response) {
