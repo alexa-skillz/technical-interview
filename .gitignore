@@ -38,3 +38,8 @@ jspm_packages
 
 # Env Variables
 .coveralls.yml
+
+# Test files
+.test-files
+test-AlexaSkill.js
+test-index.js
