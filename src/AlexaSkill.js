@@ -10,92 +10,155 @@ AlexaSkill.speechOutputType = {
 };
 
 AlexaSkill.prototype.requestHandlers = {
-  // TODO: LaunchRequest
-    // TODO: takes three params of event, context, and response
-      /*
-      event = will contain an object with information about the request
-      context = will represent the state of the Lambda function. The context parameter is also used for sending a response back to the caller.
-      response =
-      */
-    // TODO: calls a method of .call on this.eventHandlers.onLaunch and provides it with 4 params ( this, event.request, event.session, response )
-  // TODO: IntentRequest
-    // TODO: takes three params of event, context, and response
-    // TODO: calls a method of .call on this.eventHandlers.onIntent and provides it with 4 params ( this, event.request, event.session, response )
-  // TODO: SessionEndedRequest
-    // TODO: takes two params of event, context
-    // TODO: calls a method of .call on this.eventHandlers.onSessionEnded and provides it with 2 params ( event.request, event.session )
-    // TODO: calls context with a method of succeed that is invoked.
+  LaunchRequest: function(event, context, response) {
+    this.eventHandlers.onLaunch.call(this, event.request, event.session, response);
+  },
+  IntentRequest: function(event, content, response) {
+    this.eventHandlers.onIntent.call(this, event.request, event.session, response);
+  },
+  SessionEndedRequest: function(event, context) {
+    this.eventHandlers.onSessionEnded(event.request, event.session);
+    context.succeed();
+  }
 };
 
 AlexaSkill.prototype.eventHandlers = {
-  // TODO: onSessionStarted
-    // TODO: takes 2 params of sessionStartedRequest and session
-    // Called when the session starts. Subclasses could have overriden this function to open any necessary resources.
-  // TODO: onLaunch
-    // TODO: takes 3 params of launchRequest, session, response
-    // Called when the user invokes the skill without specifying what they want. The subclass must override this function and provide feedback to the user.
-  // TODO: onIntent
-    // TODO: takes 3 params of intentRequest, session, response
-      // TODO: creates 3 function scoped vars of intent, intentName, and intentHandler
-      // TODO: if intentName is true then invoke the .call method on the intentHandler and pass it 4 params of this, intent, session, and response
-      // TODO: if intentName is fall then throw and unsupported intentName
-  // TODO: onSessionEnded
+  sessionStartedRequest: function(sessionStartedRequest, session) {
+    console.log(`eventHandlers - sessionStartedRequest ID: ${sessionStartedRequest.requestId} - session ID: ${session.sessionId}`);
+  },
+  onLaunch: function(launchRequest, session, response) {
+    console.log(`eventHandlers - launchRequest ID: ${launchRequest.requestId} - session ID: ${session.sessionId} - response: ${response}`);
+    throw 'onLaunch should be overriden by a subclass';
+  },
+  onIntent: function(intentRequest, session, response) {
+    let intent = intentRequest.intent;
+    let intentName = intentRequest.intent.name;
+    let intentHandler = this.intentHandlers[intentName];
+
+    if (intentHandler) {
+      console.log(`dispatch intent = ${intentName}`);
+      intentHandler.call(this, intent, session, response);
+    } else {
+      throw `Unsupported intent = ${intentName}`;
+    }
+  },
+  onSessionEnded: function(sessionEndedRequest, session) {
+    console.log(`eventHandlers - sessionEndedRequest ID: ${sessionEndedRequest.requestId} - session ID: ${session.sessionId}`);
+  }
 };
 
 AlexaSkill.prototype.intentHandlers = {};
 
-AlexaSkill.prototype.execute = function() {
-  // TODO: Try
-    // TODO: if _appID and applicationId don't equal _appId throw invalid applicationId
-    // TODO: if there is no event.session.attributes set attributes to empty object
-    // TODO: if event.session.new call this.eventHandlers.onSessionStarted function with params of event.request and event.session
-    // TODO: set var of requestHandler to equal this.requestHandlers[event.request.type]
-    // TODO: call requestHandler var and pass call method params of this, event, context, new Response constructor. New Response constructor accepts two params - context, event.session
+AlexaSkill.prototype.execute = function (event, context) {
+  try {
+    console.log(`session applicationId: ${event.session.application.applicationId}`);
 
-  // TODO: Catch
-    // TODO: pass 'e' as params to Catch
-    // TODO: call context with a method of fail and pass it e as the params.
+    // Validate that this request originated from authorized source.
+    if (this._appId && event.session.application.applicationId !== this._appId) {
+      console.log(`The applicationIds do not match : ${event.session.application.applicationId} and ${this._appId}`);
+      throw 'Invalid applicationId';
+    }
+
+    if (!event.session.attributes) {
+      event.session.attributes = {};
+    }
+
+    if (event.session.new) {
+      this.eventHandlers.onSessionStarted(event.request, event.session);
+    }
+
+    // Route the request to the proper handler which may have been overriden.
+    let requestHandler = this.requestHandlers[event.request.type];
+    requestHandler.call(this, event, context, new Response(context, event.session));
+  } catch (e) {
+    console.log(`Unexpected exception ${e}`);
+    context.fail(e);
+  }
 };
 
-const Response = function() {
-// Response object constructor
-  // TODO: takes two params context and session
-  /*
-  context = will represent the state of the Lambda function. The context parameter is also used for sending a response back to the caller.
-  session =
-  */
-    // TODO: set this._context to equal context
-    // TODO: set this._session to equal session
+let Response = function (context, session) {
+  this._context = context;
+  this._session = session;
 };
 
-// eslint-disable-next-line
-function createSpeechObject() {
-  // TODO: takes one param of optionsParam
-    // TODO: if optionsParam and optionsParam.type are equal to SSML (Speech Synthesis Markup Language)
-      // TODO: return and object with properties of type and SSML
-        // type = optionsParam.type
-        // ssml = optionsParam.speech
-    // TODO: if optionsParam and optionsParam.type are not equal to SSML
-      // TODO: return and object with properties of type and SSML
-        // type = optionsParam.type or 'PlainText'
-        // ssml = optionsParam.speech or optionsParam
+function createSpeechObject(optionsParam) {
+  if (optionsParam && optionsParam.type === 'SSML') {
+    return {
+      type: optionsParam.type,
+      ssml: optionsParam.speech
+    };
+  } else {
+    return {
+      type: optionsParam.type || 'PlainText',
+      text: optionsParam.speech || optionsParam
+    };
+  }
 }
 
-Response.prototype = (function() {
-// Response prototype is equal to and IFFE
-  // TODO: set a function expression with one param of options
-    // TODO: create an object with properties of outputSpeech and shouldEndSession and set it to a var.
-      // outputSpeech = createSpeechObject(options.output)
-      // shouldEndSession = options.shouldEndSession
-    // TODO: if options.reprompt is true then set the object created in the last todo with a property of .reprompt
-      // outputSpeech = createSpeechObject(options.reprompt)
-    // TODO: options.cardTitle and options.cardContent are true then set the object created with a property of .card with 3 properties of type, title, and content.
-    // TODO: create an object with properties of version and response.
-      // version = 1.0
-      // response = alexaResponse
-    // TODO: if options.session and options.session.attributes is true then set returnResult.sessionAttributes to equal options.session.attributes
-    // TODO: return returnResult and end function
-  // TODO: return out of IFFE with an object that contains the key value pairs with the value equal to a function that builds the speech response.
+Response.prototype = (function () {
+  let buildSpeechletResponse = function (options) {
+    let alexaResponse = {
+      outputSpeech: createSpeechObject(options.output),
+      shouldEndSession: options.shouldEndSession
+    };
+    if (options.reprompt) {
+      alexaResponse.reprompt = {
+        outputSpeech: createSpeechObject(options.reprompt)
+      };
+    }
+    if (options.cardTitle && options.cardContent) {
+      alexaResponse.card = {
+        type: 'Simple',
+        title: options.cardTitle,
+        content: options.cardContent
+      };
+    }
+    let returnResult = {
+      version: '1.0',
+      response: alexaResponse
+    };
+    if (options.session && options.session.attributes) {
+      returnResult.sessionAttributes = options.session.attributes;
+    }
+    return returnResult;
+  };
+
+  return {
+    tell: function (speechOutput) {
+      this._context.succeed(buildSpeechletResponse({
+        session: this._session,
+        output: speechOutput,
+        shouldEndSession: true
+      }));
+    },
+    tellWithCard: function (speechOutput, cardTitle, cardContent) {
+      this._context.succeed(buildSpeechletResponse({
+        session: this._session,
+        output: speechOutput,
+        cardTitle: cardTitle,
+        cardContent: cardContent,
+        shouldEndSession: true
+      }));
+    },
+    ask: function (speechOutput, repromptSpeech) {
+      this._context.succeed(buildSpeechletResponse({
+        session: this._session,
+        output: speechOutput,
+        reprompt: repromptSpeech,
+        shouldEndSession: false
+      }));
+    },
+    askWithCard: function (speechOutput, repromptSpeech, cardTitle, cardContent) {
+      this._context.succeed(buildSpeechletResponse({
+        session: this._session,
+        output: speechOutput,
+        reprompt: repromptSpeech,
+        cardTitle: cardTitle,
+        cardContent: cardContent,
+        shouldEndSession: false
+      }));
+    }
+  };
 })();
 
 module.exports = AlexaSkill;
