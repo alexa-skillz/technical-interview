@@ -1,10 +1,10 @@
 const expect = require('chai').expect;
-const index = require('../src/index');
+const index = require('../src/index.js');
 
 const context = require('aws-lambda-mock-context');
 const ctx = context();
 
-describe('Testing a session with the RecipeIntent', function() {
+describe('Testing a session with the GetQuestionIntent', function() {
   var speechResponse = null;
   var speechError = null;
 
