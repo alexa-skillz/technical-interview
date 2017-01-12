@@ -43,13 +43,13 @@ TechQuestion.prototype.intentHandlers = {
     newQuestion(response);
   },
   // TODO: AMAZON.StartOverIntent
-  'AMAZON.StartOverIntent': function(intent, session, response) {
-
-  },
+  // 'AMAZON.StartOverIntent': function(intent, session, response) {
+  //
+  // },
   // TODO: AMAZON.RepeatIntent
-  'AMAZON.RepeatIntent': function(intent, session, response) {
-
-  },
+  // 'AMAZON.RepeatIntent': function(intent, session, response) {
+  //
+  // },
   // TODO: AMAZON.HelpIntent
   'AMAZON.HelpIntent': function(intent, session, response) {
     let repromptText = 'Are you ready to get started?';
@@ -87,12 +87,13 @@ TechQuestion.prototype.intentHandlers = {
 
 function newQuestion(response) {
   let randomQuestion = Math.floor(Math.random() * TECHQUESTIONS.length);
-  let question = TECHQUESTIONS[randomQuestion];
-  console.log(question);
+  let spokenQuestion = Object.keys(TECHQUESTIONS[randomQuestion])[0];
 
-  let speechOutput = `Here is your question <break time = \"0.3s\"/> ${question}`;
+  console.log(spokenQuestion);
+
+  let speechOutput = `Here is your question <break time = \"0.3s\"/> ${spokenQuestion}`;
   let cardTitle = 'Whiteboaring Question';
-  response.askWithCard(speechOutput, cardTitle, question);
+  response.askWithCard(speechOutput, cardTitle, spokenQuestion);
 }
 
 exports.handler = function(event, context) {
