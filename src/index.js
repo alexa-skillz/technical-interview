@@ -7,19 +7,16 @@ const TechQuestion = function() {
   AlexaSkill.call(this, APP_ID);
 };
 
-// Requiring in technical questions from lib directory to be used here.
 const TECHQUESTIONS = require('./lib/tech-questions');
 
 TechQuestion.prototype = Object.create(AlexaSkill.prototype);
 TechQuestion.prototype.constructor = TechQuestion;
 
 TechQuestion.prototype.eventHandlers.onSessionStarted = function(sessionStartedRequest, session) {
-  // TODO: takes 2 parms of sessionStartedRequest and session
   console.log(`sessionStartedRequest ID: ${sessionStartedRequest.requestId} - session ID: ${session.sessionId}`);
 };
 
 TechQuestion.prototype.eventHandlers.onLaunch = function(launchRequest, session, response) {
-  // TODO: takes 3 params of LaunchRequest, session, and response
   console.log(`launchRequest ID: ${launchRequest.requestId} - session ID: ${session.sessionId}`);
   let speechOutput = 'Welcome to the Technical Interview Whiteboaring trainer. Are you ready to get started?';
   let repromptText = 'Are you ready to get started?';
@@ -27,18 +24,14 @@ TechQuestion.prototype.eventHandlers.onLaunch = function(launchRequest, session,
 };
 
 TechQuestion.prototype.eventHandlers.onSessionEnded = function(sessionEndedRequest, session) {
-  // TODO: takes 2 parms of sessionEndedRequest and session
   console.log(`sessionEndedRequest ID: ${sessionEndedRequest.requestId} - session ID: ${session.sessionId}`);
 };
 
 TechQuestion.prototype.intentHandlers = {
-  // TODO: add GetQuestionIntent
   'GetQuestionIntent': function(intent, session, response) {
     let speechOutput = 'Here is your question:';
     response.tell(speechOutput, newQuestion(response));
-    // newQuestion(response);
   },
-  // TODO: add DontKnowIntent
   'DontKnowIntent': function(intent, session, response) {
     newQuestion(response);
   },
@@ -50,28 +43,23 @@ TechQuestion.prototype.intentHandlers = {
   // 'AMAZON.RepeatIntent': function(intent, session, response) {
   //
   // },
-  // TODO: AMAZON.HelpIntent
   'AMAZON.HelpIntent': function(intent, session, response) {
     let repromptText = 'Are you ready to get started?';
-    let speechOutput = 'The Technical Interview Whiteboaring trainer contains a collection of common JavaScript whiteboaring quesitons. You can ask for a question by saying <break time = "0.3s"/> give me a whiteboarding question. You can also end your current training session at any time by saying stop, cancel, or exit.';
+    let speechOutput = 'The Technical Interview Whiteboaring trainer contains a collection of common JavaScript whiteboaring quesitons. You can ask for a question by saying... give me a whiteboarding question. You can also end your current training session at any time by saying stop, cancel, or exit.';
     response.ask(speechOutput, repromptText);
   },
-  // TODO: AMAZON.NoIntent
   'AMAZON.NoIntent': function(intent, session, response) {
     let speechOutput = '';
     response.tell(speechOutput);
   },
-  // TODO: AMAZON.YesIntent
   'AMAZON.YesIntent': function(intent, session, response) {
     let speechOutput = 'Here is your question:';
     response.tell(speechOutput, newQuestion(response));
   },
-  // TODO: AMAZON.StopIntent
   'AMAZON.StopIntent': function(intent, session, response) {
     let speechOutput = '';
     response.tell(speechOutput);
   },
-  // TODO: AMAZON.CancelIntent
   'AMAZON.CancelIntent': function(intent, session, response) {
     let speechOutput = '';
     response.tell(speechOutput);
@@ -86,13 +74,14 @@ TechQuestion.prototype.intentHandlers = {
 
 function newQuestion(response) {
   let randomQuestion = Math.floor(Math.random() * TECHQUESTIONS.length);
-  let spokenQuestion = TECHQUESTIONS[randomQuestion];
-
-  console.log(spokenQuestion);
-
+  let spokenQuestion = TECHQUESTIONS[randomQuestion].response.outputSpeech.text;
+  let cardImage = TECHQUESTIONS[randomQuestion].response.card.image;
   let speechOutput = `Here is your question:\r\n ${spokenQuestion}`;
-  let cardTitle = 'Whiteboaring Question';
-  response.tellWithCard(speechOutput, cardTitle, speechOutput);
+  let repromptSpeech = `Here is your question:\r\n ${spokenQuestion}`;
+  let cardText = TECHQUESTIONS[randomQuestion].response.card.text;
+  let cardTitle = TECHQUESTIONS[randomQuestion].response.card.title;
+
+  response.askWithCard(speechOutput, repromptSpeech, cardTitle, cardText, cardImage);
 }
 
 exports.handler = function(event, context) {

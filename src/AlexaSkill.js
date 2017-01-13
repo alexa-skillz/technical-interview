@@ -67,7 +67,6 @@ AlexaSkill.prototype.execute = function (event, context) {
       this.eventHandlers.onSessionStarted(event.request, event.session);
     }
 
-    // Route the request to the proper handler which may have been overriden.
     let requestHandler = this.requestHandlers[event.request.type];
     requestHandler.call(this, event, context, new Response(context, event.session));
   } catch (e) {
@@ -107,11 +106,15 @@ Response.prototype = (function () {
       };
     }
     if (options.cardTitle && options.cardContent) {
+      let type = 'Standard';
       alexaResponse.card = {
-        type: 'Simple',
+        type: type,
         title: options.cardTitle,
         content: options.cardContent
       };
+      if(options.cardImage) {
+        alexaResponse.card.image = options.cardImage;
+      }
     }
     let returnResult = {
       version: '1.0',
@@ -131,12 +134,13 @@ Response.prototype = (function () {
         shouldEndSession: true
       }));
     },
-    tellWithCard: function (speechOutput, cardTitle, cardContent) {
+    tellWithCard: function (speechOutput, cardTitle, cardContent, cardImage) {
       this._context.succeed(buildSpeechletResponse({
         session: this._session,
         output: speechOutput,
         cardTitle: cardTitle,
         cardContent: cardContent,
+        cardImage: cardImage,
         shouldEndSession: true
       }));
     },
@@ -148,14 +152,15 @@ Response.prototype = (function () {
         shouldEndSession: false
       }));
     },
-    askWithCard: function (speechOutput, repromptSpeech, cardTitle, cardContent) {
+    askWithCard: function (speechOutput, repromptSpeech, cardTitle, cardContent, cardImage) {
       this._context.succeed(buildSpeechletResponse({
         session: this._session,
         output: speechOutput,
         reprompt: repromptSpeech,
         cardTitle: cardTitle,
         cardContent: cardContent,
-        shouldEndSession: false
+        cardImage: cardImage,
+        shouldEndSession: true
       }));
     }
   };
