@@ -6,7 +6,7 @@ const ctx = context();
 
 require('../src/index.js');
 
-describe('Testing a session with the DontKnowIntentIntent', function() {
+describe('Testing a session with the DontKnowIntent', function() {
   var speechResponse = null;
   var speechError = null;
 
@@ -29,7 +29,7 @@ describe('Testing a session with the DontKnowIntentIntent', function() {
         'locale': 'en-US',
         'timestamp': '2017-01-09T03:43:35Z',
         'intent': {
-          'name': 'DontKnowIntentIntent',
+          'name': 'DontKnowIntent',
           'slots': {}
         }
       },
