@@ -27,6 +27,7 @@
     "aws-lambda-pify": "^3.0.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
+    "coveralls": "^2.11.15",
     "gulp": "^3.9.1",
     "gulp-cache": "^0.4.5",
     "gulp-eslint": "^3.0.1",
