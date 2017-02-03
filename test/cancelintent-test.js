@@ -35,7 +35,7 @@ describe('Testing a session with the AMAZON.CancelIntent', function() {
       },
       'version': '1.0'
     }, ctx);
-
+    
     ctx.Promise
       .then(resp => { speechResponse = resp; done(); })
       .catch(err => { speechError = err; done(); });
