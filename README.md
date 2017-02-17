@@ -4,4 +4,4 @@
 
 The Alexa whiteboarding interview trainer is built to help you practice whitboarding questions. 
 
-### Suggest new quesiton questions at https://interviewoverflow.herokuapp.com
+### Suggest new questions at https://interviewoverflow.herokuapp.com
